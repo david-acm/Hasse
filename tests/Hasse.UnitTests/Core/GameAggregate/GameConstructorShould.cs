@@ -18,6 +18,22 @@ namespace Hasse.UnitTests.Core.GameAggregate
         public GameConstructorShould(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
+
+            // Option 1: Static factory method
+            var player1 = Player.New("David");
+
+            // Option 2: Inner factory
+            var player2 = Player.Factory.CreatePlayer("David");
+
+            // Option 3: Factory method
+            var playerFactory = new DefaultPlayerFactory();
+            var player3 = playerFactory.GetPlayer("David");
+            var player4 = playerFactory.GetPlayer("David");
+
+            // Get Team
+            var defaultTeamFactory = new DefaultTeamFactory();
+            var team1 = defaultTeamFactory.GetTeam(player1, player2);
+            var team2 = defaultTeamFactory.GetTeam(player3, player4);
         }
 
         [Fact]
