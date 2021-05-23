@@ -17,8 +17,8 @@ namespace Hasse.FunctionalTests
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {
         /// <summary>
-        /// Overriding CreateHost to avoid creating a separate ServiceProvider per this thread:
-        /// https://github.com/dotnet-architecture/eShopOnWeb/issues/465
+        ///     Overriding CreateHost to avoid creating a separate ServiceProvider per this thread:
+        ///     https://github.com/dotnet-architecture/eShopOnWeb/issues/465
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
@@ -67,15 +67,12 @@ namespace Hasse.FunctionalTests
                     // Remove the app's ApplicationDbContext registration.
                     var descriptor = services.SingleOrDefault(
                         d => d.ServiceType ==
-                            typeof(DbContextOptions<AppDbContext>));
+                             typeof(DbContextOptions<AppDbContext>));
 
-                    if (descriptor != null)
-                    {
-                        services.Remove(descriptor);
-                    }
+                    if (descriptor != null) services.Remove(descriptor);
 
                     // This should be set for each individual test run
-                    string inMemoryCollectionName = Guid.NewGuid().ToString();
+                    var inMemoryCollectionName = Guid.NewGuid().ToString();
 
                     // Add ApplicationDbContext using an in-memory database for testing.
                     services.AddDbContext<AppDbContext>(options =>

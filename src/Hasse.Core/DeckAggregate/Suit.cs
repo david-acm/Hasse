@@ -19,7 +19,9 @@ namespace Hasse.Core.DeckAggregate
 
         private sealed class HeartType : Suit
         {
-            public HeartType() : base(nameof(HeartType), 1) { }
+            public HeartType() : base(nameof(HeartType), 1)
+            {
+            }
 
             public override Color Color => Color.Red;
             public override char Symbol => '❤';
@@ -27,7 +29,9 @@ namespace Hasse.Core.DeckAggregate
 
         private sealed class DiamondType : Suit
         {
-            public DiamondType() : base(nameof(DiamondType) , 2) { }
+            public DiamondType() : base(nameof(DiamondType), 2)
+            {
+            }
 
             public override Color Color => Color.Red;
             public override char Symbol => '♦';
@@ -35,7 +39,9 @@ namespace Hasse.Core.DeckAggregate
 
         private sealed class SpadeType : Suit
         {
-            public SpadeType() : base(nameof(SpadeType), 3) { }
+            public SpadeType() : base(nameof(SpadeType), 3)
+            {
+            }
 
             public override Color Color => Color.Black;
             public override char Symbol => '♠';
@@ -43,7 +49,9 @@ namespace Hasse.Core.DeckAggregate
 
         private sealed class ClubType : Suit
         {
-            public ClubType() : base(nameof(ClubType), 4) { }
+            public ClubType() : base(nameof(ClubType), 4)
+            {
+            }
 
             public override Color Color => Color.Black;
             public override char Symbol => '♣';

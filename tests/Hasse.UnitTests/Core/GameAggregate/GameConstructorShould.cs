@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Hasse.Core.DeckAggregate;
 using Hasse.Core.GameAggregate;
 using Hasse.SharedKernel;
@@ -9,111 +8,164 @@ using Xunit.Abstractions;
 
 namespace Hasse.UnitTests.Core.GameAggregate
 {
-    public class GameConstructorShould
-    {
-        private readonly ITestOutputHelper _testOutputHelper;
-        private HasseGame _hasseGame;
-        private Team _testTeam;
+	public class GameConstructorShould
+	{
+		private const string Player1Name = "David";
+		private const string Player2Name = "Allison";
+		private const string Player3Name = "Greta";
+		private const string Player4Name = "Joe";
+		private readonly HasseGame _hasseGame;
+		private readonly ITestOutputHelper _logger;
 
-        public GameConstructorShould(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
+		public GameConstructorShould(ITestOutputHelper logger)
+		{
+			_logger = logger;
 
-            // Option 1: Static factory method
-            var player1 = Player.New("David");
+			_hasseGame = new HappyPathGameBuilder();
+		}
 
-            // Option 2: Inner factory
-            var player2 = Player.Factory.CreatePlayer("David");
+		[Fact]
+		public void HaveADeckWith24Cards()
+		{
+			// Prepare
 
-            // Option 3: Factory method
-            var playerFactory = new DefaultPlayerFactory();
-            var player3 = playerFactory.GetPlayer("David");
-            var player4 = playerFactory.GetPlayer("David");
+			// Execute
 
-            // Get Team
-            var defaultTeamFactory = new DefaultTeamFactory();
-            var team1 = defaultTeamFactory.GetTeam(player1, player2);
-            var team2 = defaultTeamFactory.GetTeam(player3, player4);
-        }
+			// Assert
+			var cardList = _hasseGame.Deck.Cards.ToList();
+			cardList.ForEach(card => _logger.WriteLine($"{card.Suit.Symbol} {card.Name}"));
 
-        [Fact]
-        public void HaveADeckWith24Cards()
-        {
-            // Prepare
+			Assert.Equal(24, cardList.Count);
+		}
 
-            // Execute
+		[Fact]
+		public void HaveADeckWithThe4Suits()
+		{
+			// Prepare
 
-            // Assert
-            var cardList = _hasseGame.Deck.Cards.ToList();
-            cardList.ForEach(card => _testOutputHelper.WriteLine($"{card.Suit.Symbol} {card.Name}"));
+			// Execute
 
-            Assert.Equal(24, cardList.Count); 
-        }
+			// Assert
+			var suitList = _hasseGame.Deck.Suits;
+			suitList.ForEach(s => _logger.WriteLine($"{s.PluralizeName()} {s.Symbol}"));
 
-        [Fact]
-        public void HaveADeckWithThe4Suits()
-        {
-            // Prepare
+			Assert.Equal(4, suitList.Count());
+		}
 
-            // Execute
+		[Fact]
+		public void HaveADeckWithThe6Ranks()
+		{
+			// Prepare
 
-            // Assert
-            var suitList = _hasseGame.Deck.Cards
-                .GroupBy(c => c.Suit)
-                .Select(x => x.Key)
-                .ToList();
-            suitList.ToList().ForEach(s => _testOutputHelper.WriteLine($"{s.PluralizeName()} {s.Symbol}"));
+			// Execute
 
-            Assert.Equal(4, suitList.Count());
-        }
+			// Assert
+			IEnumerable<Rank> rankList = _hasseGame.Deck.Ranks;
 
-        [Fact]
-        public void HaveADeckWithThe6Ranks()
-        {
-            // Prepare
+			rankList.ForEach(s => _logger.WriteLine(s.NormalizeName()));
 
-            // Execute
+			Assert.Equal(6, rankList.Count());
+		}
 
-            // Assert
-            IEnumerable<Rank> rankList = _hasseGame.Deck.Cards
-                .GroupBy(c => c.Rank)
-                .Select(x => x.Key)
-                .OrderBy(r => r.Value).ToList();
-            rankList.ToList().ForEach(s => _testOutputHelper.WriteLine(s.NormalizeName()));
+		[Fact]
+		public void HaveTwoTeams()
+		{
+			// Prepare
 
-            Assert.Equal(6, rankList.Count());
-        }
+			// Execute
 
+			// Assert
+			var teamCount = _hasseGame.Teams.Count;
 
-        [Fact]
-        public void HaveTwoTeams()
-        {
-            // Prepare
+			Assert.Equal(2, teamCount);
+		}
 
-            // Execute
+		[Fact]
+		public void ShallowCopyAll()
+		{
+			var game = (HasseGame) _hasseGame.ShallowCopy();
 
-            // Assert
-            var teamCount = _hasseGame.Teams.Count;
+			Assert.Same(game.Deck, _hasseGame.Deck);
+			Assert.NotSame(game.Teams, _hasseGame.Teams);
+		}
 
-            Assert.Equal(2, teamCount);
-        }
+		[Fact]
+		public void DeepCopyAll()
+		{
+			var game = (HasseGame) _hasseGame.DeepCopy();
 
-        [Fact]
-        public void ShallowCopyAll()
-        {
-            var game = (HasseGame)_hasseGame.ShallowCopy(); 
+			Assert.NotSame(game.Teams, _hasseGame.Teams);
+			Assert.NotSame(game.Deck, _hasseGame.Deck);
+		}
 
-            Assert.Same(game.Deck, _hasseGame.Deck);
-            Assert.NotSame(game.Teams, _hasseGame.Teams);
-        }
+		[Theory]
+		[InlineData(Player1Name)]
+		[InlineData(Player2Name)]
+		[InlineData(Player3Name)]
+		[InlineData(Player4Name)]
+		public void ShouldHaveAssignedNames(string name)
+		{
+			_hasseGame.Teams.ToList().ForEach(t => Assert.NotNull(t.Name));
 
-        [Fact]
-        public void DeepCopyAll()
-        {
-            var game = (HasseGame)_hasseGame.DeepCopy();
+			var names = _hasseGame.Teams.SelectMany(t => t.Players.Select(p => p.Name));
 
-            Assert.NotSame(game.Teams, _hasseGame.Teams);
-            Assert.NotSame(game.Deck, _hasseGame.Deck);
-        }
-    }
+			Assert.Contains(names, p => p == name);
+		}
+
+		[Fact]
+		public void SamePositionDifferentDeckShouldNotBeEqual()
+		{
+			var deckFactory = new HasseDeckFactory();
+			var deck1 = deckFactory.GetDeck();
+			var deck2 = deckFactory.GetDeck();
+
+			Assert.NotEqual(deck1, deck2);
+			Assert.NotEqual(
+				deck1.Cards.FirstOrDefault(),
+				deck2.Cards.FirstOrDefault());
+		}
+
+		[Fact]
+		public void SuitsShouldBeEqual()
+		{
+			var diamond1 = Suit.Diamond;
+			var diamond2 = Suit.Diamond;
+
+			Assert.StrictEqual(diamond1, diamond2);
+		}
+
+		[Fact]
+		public void ShouldShuffleUponConstruction()
+		{
+			var gameCards = _hasseGame.Deck.Cards;
+
+			var sorted = gameCards.OrderBy(c => c.Rank).ToList();
+
+			gameCards.ForEach(gc =>
+				_logger.WriteLine($"{gc.Suit.Symbol} {gc.Name}", gc.Suit.Color));
+
+			Assert.NotEqual(sorted.First(), gameCards.First());
+			Assert.NotEqual(sorted.Last(), gameCards.First());
+		}
+
+		[Fact]
+		public void DealShouldGive6CardsToEachPlayer()
+		{
+			_hasseGame.Deal();
+			_hasseGame.Deal();
+
+			Assert.All(
+				_hasseGame.Players,
+				p => Assert.Equal(6, p.Hand.Count));
+		}
+
+		// TODO: Separate Tests by Aggregat/Method/Fact
+		[Fact]
+		public void DeckShouldBeEmptyAfterDeal()
+		{
+			_hasseGame.Deal();
+
+			Assert.Empty(_hasseGame.Deck.Cards);
+		}
+	}
 }

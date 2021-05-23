@@ -21,10 +21,10 @@ namespace Hasse.Core.Services
 
         public async Task<Result<List<ToDoItem>>> GetAllIncompleteItemsAsync(int projectId, string searchString)
         {
-            if(string.IsNullOrEmpty(searchString))
+            if (string.IsNullOrEmpty(searchString))
             {
                 var errors = new List<ValidationError>();
-                errors.Add(new ValidationError()
+                errors.Add(new ValidationError
                 {
                     Identifier = nameof(searchString),
                     ErrorMessage = $"{nameof(searchString)} is required."
@@ -47,7 +47,7 @@ namespace Hasse.Core.Services
             catch (Exception ex)
             {
                 // TODO: Log details here
-                return Result<List<ToDoItem>>.Error(new[] { ex.Message });
+                return Result<List<ToDoItem>>.Error(ex.Message);
             }
         }
 
@@ -60,10 +60,7 @@ namespace Hasse.Core.Services
 
             var items = incompleteSpec.Evaluate(project.Items).ToList();
 
-            if (!items.Any())
-            {
-                return Result<ToDoItem>.NotFound();
-            }
+            if (!items.Any()) return Result<ToDoItem>.NotFound();
 
             return new Result<ToDoItem>(items.First());
         }

@@ -6,18 +6,18 @@ using Hasse.Core.ProjectAggregate.Specifications;
 using Hasse.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Hasse.Web.Pages.ToDoRazorPage
+namespace Hasse.Web.Pages.ProjectDetails
 {
     public class IncompleteModel : PageModel
     {
         private readonly IRepository<Project> _repository;
 
-        public List<ToDoItem> ToDoItems { get; set; }
-
         public IncompleteModel(IRepository<Project> repository)
         {
             _repository = repository;
         }
+
+        public List<ToDoItem> ToDoItems { get; set; }
 
         public async Task OnGetAsync()
         {

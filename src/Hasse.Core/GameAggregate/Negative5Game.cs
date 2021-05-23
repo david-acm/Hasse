@@ -1,20 +1,21 @@
 ﻿using System.Linq;
 using Hasse.Core.DeckAggregate;
+using Hasse.SharedKernel;
 
 namespace Hasse.Core.GameAggregate
 {
-    public class Negative5Game : TwoPlayerCardGame
+    public class Negative5Game : TwoTeamsCardGame
     {
         private static readonly DeckFactory DeckFactory = new FullDeckFactory();
 
-        public Negative5Game(Team team1, Team team2) : base(team1, team2, DeckFactory)
+        public Negative5Game(Team.Team team1, Team.Team team2) : base(team1, team2, DeckFactory)
         {
         }
 
         public override IPrototype DeepCopy()
         {
-            var team1 = (Team)_teams.ElementAt(0)?.DeepCopy();
-            var team2 = (Team)_teams.ElementAt(1)?.DeepCopy();
+            var team1 = (Team.Team) _teams.ElementAt(0)?.DeepCopy();
+            var team2 = (Team.Team) _teams.ElementAt(1)?.DeepCopy();
 
             return new Negative5Game(team1, team2);
         }

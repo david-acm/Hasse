@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Hasse.UnitTests;
 using Hasse.Core.ProjectAggregate;
 using Microsoft.EntityFrameworkCore;
 using Xunit;

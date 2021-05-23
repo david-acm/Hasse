@@ -11,7 +11,7 @@ namespace Hasse.Web.ViewModels
 
         public static ToDoItemViewModel FromToDoItem(ToDoItem item)
         {
-            return new ToDoItemViewModel()
+            return new()
             {
                 Id = item.Id,
                 Title = item.Title,

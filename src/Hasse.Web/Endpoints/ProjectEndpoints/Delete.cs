@@ -8,9 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Hasse.Web.Endpoints.ProjectEndpoints
 {
-    public class Delete : BaseAsyncEndpoint
-        .WithRequest<DeleteProjectRequest>
-        .WithoutResponse
+    public class Delete : BaseAsyncEndpoint.WithRequest<DeleteProjectRequest>.WithoutResponse
     {
         private readonly IRepository<Project> _repository;
 
@@ -24,9 +22,9 @@ namespace Hasse.Web.Endpoints.ProjectEndpoints
             Summary = "Deletes a Project",
             Description = "Deletes a Project",
             OperationId = "Projects.Delete",
-            Tags = new[] { "ProjectEndpoints" })
+            Tags = new[] {"ProjectEndpoints"})
         ]
-        public override async Task<ActionResult> HandleAsync([FromRoute]DeleteProjectRequest request,
+        public override async Task<ActionResult> HandleAsync([FromRoute] DeleteProjectRequest request,
             CancellationToken cancellationToken)
         {
             var aggregateToDelete = await _repository.GetByIdAsync(request.ProjectId); // TODO: pass cancellation token

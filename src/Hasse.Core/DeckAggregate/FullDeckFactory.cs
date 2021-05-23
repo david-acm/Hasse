@@ -4,7 +4,7 @@
     {
         protected override FullDeck CreateDeck()
         {
-            return new FullDeck();
+            return new();
         }
     }
 }

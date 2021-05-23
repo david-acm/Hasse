@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Moq;
-using Xunit;
 using Hasse.Core.Interfaces;
 using Hasse.Core.ProjectAggregate;
 using Hasse.Core.ProjectAggregate.Events;
 using Hasse.Core.ProjectAggregate.Handlers;
+using Moq;
+using Xunit;
 
 namespace Hasse.UnitTests.Core.Handlers
 {
     public class ItemCompletedEmailNotificationHandlerHandle
     {
-        private ItemCompletedEmailNotificationHandler _handler;
-        private Mock<IEmailSender> _emailSenderMock;
+        private readonly Mock<IEmailSender> _emailSenderMock;
+        private readonly ItemCompletedEmailNotificationHandler _handler;
 
         public ItemCompletedEmailNotificationHandlerHandle()
         {
@@ -24,7 +24,8 @@ namespace Hasse.UnitTests.Core.Handlers
         [Fact]
         public async Task ThrowsExceptionGivenNullEventArgument()
         {
-            Exception ex = await Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
+            Exception ex =
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
         }
 
         [Fact]
@@ -32,7 +33,9 @@ namespace Hasse.UnitTests.Core.Handlers
         {
             await _handler.Handle(new ToDoItemCompletedEvent(new ToDoItem()), CancellationToken.None);
 
-            _emailSenderMock.Verify(sender => sender.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            _emailSenderMock.Verify(
+                sender => sender.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>()), Times.Once);
         }
     }
 }

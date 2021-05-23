@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Hasse.Core;
-using Hasse.Web.ApiModels;
 using Hasse.Core.ProjectAggregate;
 using Hasse.Core.ProjectAggregate.Specifications;
 using Hasse.SharedKernel.Interfaces;
@@ -32,8 +30,8 @@ namespace Hasse.Web.Controllers
                 Id = project.Id,
                 Name = project.Name,
                 Items = project.Items
-                            .Select(item => ToDoItemViewModel.FromToDoItem(item))
-                            .ToList()
+                    .Select(item => ToDoItemViewModel.FromToDoItem(item))
+                    .ToList()
             };
             return View(dto);
         }

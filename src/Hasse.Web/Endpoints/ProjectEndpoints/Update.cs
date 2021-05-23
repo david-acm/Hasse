@@ -8,9 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Hasse.Web.Endpoints.ProjectEndpoints
 {
-    public class Update : BaseAsyncEndpoint
-        .WithRequest<UpdateProjectRequest>
-        .WithResponse<UpdateProjectResponse>
+    public class Update : BaseAsyncEndpoint.WithRequest<UpdateProjectRequest>.WithResponse<UpdateProjectResponse>
     {
         private readonly IRepository<Project> _repository;
 
@@ -24,7 +22,7 @@ namespace Hasse.Web.Endpoints.ProjectEndpoints
             Summary = "Updates a Project",
             Description = "Updates a Project with a longer description",
             OperationId = "Projects.Update",
-            Tags = new[] { "ProjectEndpoints" })
+            Tags = new[] {"ProjectEndpoints"})
         ]
         public override async Task<ActionResult<UpdateProjectResponse>> HandleAsync(UpdateProjectRequest request,
             CancellationToken cancellationToken)
@@ -35,7 +33,7 @@ namespace Hasse.Web.Endpoints.ProjectEndpoints
 
             await _repository.UpdateAsync(existingProject); // TODO: pass cancellation token
 
-            var response = new UpdateProjectResponse()
+            var response = new UpdateProjectResponse
             {
                 Project = new ProjectRecord(existingProject.Id, existingProject.Name)
             };

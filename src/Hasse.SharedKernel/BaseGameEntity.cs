@@ -1,12 +1,10 @@
-﻿using Hasse.SharedKernel;
-
-namespace Hasse.Core.GameAggregate
+﻿namespace Hasse.SharedKernel
 {
     public abstract class BaseGameEntity : BaseEntity, IPrototype
     {
         public virtual IPrototype ShallowCopy()
         {
-            return (IPrototype)this.MemberwiseClone();
+            return (IPrototype) MemberwiseClone();
         }
 
         public abstract IPrototype DeepCopy();

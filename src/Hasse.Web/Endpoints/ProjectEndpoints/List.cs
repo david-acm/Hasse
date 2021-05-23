@@ -9,9 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Hasse.Web.Endpoints.ProjectEndpoints
 {
-    public class List : BaseAsyncEndpoint
-        .WithoutRequest
-        .WithResponse<ProjectListResponse>
+    public class List : BaseAsyncEndpoint.WithoutRequest.WithResponse<ProjectListResponse>
     {
         private readonly IReadRepository<Project> _repository;
 
@@ -25,7 +23,7 @@ namespace Hasse.Web.Endpoints.ProjectEndpoints
             Summary = "Gets a list of all Projects",
             Description = "Gets a list of all Projects",
             OperationId = "Project.List",
-            Tags = new[] { "ProjectEndpoints" })
+            Tags = new[] {"ProjectEndpoints"})
         ]
         public override async Task<ActionResult<ProjectListResponse>> HandleAsync(CancellationToken cancellationToken)
         {

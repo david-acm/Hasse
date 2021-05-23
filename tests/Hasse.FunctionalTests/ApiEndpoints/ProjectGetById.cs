@@ -30,7 +30,7 @@ namespace Hasse.FunctionalTests.ApiEndpoints
         [Fact]
         public async Task ReturnsNotFoundGivenId0()
         {
-            string route = GetProjectByIdRequest.BuildRoute(0);
+            var route = GetProjectByIdRequest.BuildRoute(0);
             _ = await _client.GetAndEnsureNotFound(route);
         }
     }

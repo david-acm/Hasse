@@ -1,20 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hasse.Core.GameAggregate;
+using Ardalis.GuardClauses;
+using Hasse.SharedKernel;
 
 namespace Hasse.Core.DeckAggregate
 {
     public class HasseCardDeck : Deck
     {
-        internal HasseCardDeck() : base(GetSuits(), GetRanks())
+        internal HasseCardDeck() : this(GetSuits(), GetRanks())
         {
-            
-        } 
+        }
 
-        private static List<Rank> GetRanks() => Rank.List.Where(r => r >= Rank.Nine).ToList();
+        private HasseCardDeck(IEnumerable<Suit> suits, IEnumerable<Rank> ranks) : base(suits, ranks)
+        {
+        }
+        private static List<Rank> GetRanks()
+        {
+            return Rank.List.Where(r => r >= Rank.Nine).ToList();
+        }
 
-        private static List<Suit> GetSuits() => Suit.List.ToList();
+        private static List<Suit> GetSuits()
+        {
+            return Suit.List.ToList();
+        }
 
-        public override IPrototype DeepCopy() => new HasseCardDeck();
+        public override IPrototype DeepCopy()
+        {
+            return new HasseCardDeck(Suits, Ranks);
+        }
     }
 }

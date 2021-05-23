@@ -17,7 +17,7 @@ namespace Hasse.IntegrationTests.Data
             await repository.AddAsync(project);
 
             var newProject = (await repository.ListAsync())
-                            .FirstOrDefault();
+                .FirstOrDefault();
 
             Assert.Equal(testProjectName, newProject.Name);
             Assert.True(newProject?.Id > 0);

@@ -5,12 +5,12 @@ namespace Hasse.UnitTests.Core.ProjectAggregate
 {
     public class ProjectConstructor
     {
-        private string _testName = "test name";
-        private Project _testProject = null;
+        private readonly string _testName = "test name";
+        private Project _testProject;
 
         private Project CreateProject()
         {
-            return new Project(_testName);
+            return new(_testName);
         }
 
         [Fact]

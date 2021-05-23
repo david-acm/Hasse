@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Ardalis.HttpClientTestExtensions;
 using Hasse.Web;
 using Hasse.Web.ApiModels;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace Hasse.FunctionalTests.ControllerApis

@@ -1,4 +1,4 @@
-﻿namespace Hasse.Core.GameAggregate
+﻿namespace Hasse.SharedKernel
 {
     public interface IPrototype
     {

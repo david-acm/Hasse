@@ -13,32 +13,26 @@ namespace Hasse.Infrastructure
 {
     public class DefaultInfrastructureModule : Module
     {
+        private readonly List<Assembly> _assemblies = new();
         private readonly bool _isDevelopment;
-        private readonly List<Assembly> _assemblies = new List<Assembly>();
 
-        public DefaultInfrastructureModule(bool isDevelopment, Assembly callingAssembly =  null)
+        public DefaultInfrastructureModule(bool isDevelopment, Assembly callingAssembly = null)
         {
             _isDevelopment = isDevelopment;
-            var coreAssembly = Assembly.GetAssembly(typeof(Project)); // TODO: Replace "Project" with any type from your Core project
+            var coreAssembly =
+                Assembly.GetAssembly(typeof(Project)); // TODO: Replace "Project" with any type from your Core project
             var infrastructureAssembly = Assembly.GetAssembly(typeof(StartupSetup));
             _assemblies.Add(coreAssembly);
             _assemblies.Add(infrastructureAssembly);
-            if (callingAssembly != null)
-            {
-                _assemblies.Add(callingAssembly);
-            }
+            if (callingAssembly != null) _assemblies.Add(callingAssembly);
         }
 
         protected override void Load(ContainerBuilder builder)
         {
             if (_isDevelopment)
-            {
                 RegisterDevelopmentOnlyDependencies(builder);
-            }
             else
-            {
                 RegisterProductionOnlyDependencies(builder);
-            }
             RegisterCommonDependencies(builder);
         }
 
@@ -65,16 +59,14 @@ namespace Hasse.Infrastructure
                 typeof(IRequestHandler<,>),
                 typeof(IRequestExceptionHandler<,,>),
                 typeof(IRequestExceptionAction<,>),
-                typeof(INotificationHandler<>),
+                typeof(INotificationHandler<>)
             };
 
             foreach (var mediatrOpenType in mediatrOpenTypes)
-            {
                 builder
-                .RegisterAssemblyTypes(_assemblies.ToArray())
-                .AsClosedTypesOf(mediatrOpenType)
-                .AsImplementedInterfaces();
-            }
+                    .RegisterAssemblyTypes(_assemblies.ToArray())
+                    .AsClosedTypesOf(mediatrOpenType)
+                    .AsImplementedInterfaces();
 
             builder.RegisterType<EmailSender>().As<IEmailSender>()
                 .InstancePerLifetimeScope();
@@ -89,6 +81,5 @@ namespace Hasse.Infrastructure
         {
             // TODO: Add production only services
         }
-
     }
 }

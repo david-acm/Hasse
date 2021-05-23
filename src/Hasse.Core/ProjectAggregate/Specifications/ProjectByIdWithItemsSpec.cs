@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using Hasse.Core.ProjectAggregate;
 
 namespace Hasse.Core.ProjectAggregate.Specifications
 {

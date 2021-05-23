@@ -4,7 +4,7 @@
     {
         protected override HasseCardDeck CreateDeck()
         {
-            return new HasseCardDeck();
+            return new();
         }
     }
 }

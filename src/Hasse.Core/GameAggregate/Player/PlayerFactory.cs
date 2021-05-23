@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Hasse.Core.GameAggregate
+namespace Hasse.Core.GameAggregate.Player
 {
     public abstract class PlayerFactory
     {

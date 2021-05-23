@@ -23,7 +23,7 @@ namespace Hasse.IntegrationTests.Data
             // InMemory database and the new service provider.
             var builder = new DbContextOptionsBuilder<AppDbContext>();
             builder.UseInMemoryDatabase("cleanarchitecture")
-                   .UseInternalServiceProvider(serviceProvider);
+                .UseInternalServiceProvider(serviceProvider);
 
             return builder.Options;
         }

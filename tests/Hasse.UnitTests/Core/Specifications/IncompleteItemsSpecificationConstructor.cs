@@ -16,10 +16,10 @@ namespace Hasse.UnitTests.Core.Specifications
             var item3 = new ToDoItem();
             item3.MarkComplete();
 
-            var items = new List<ToDoItem>() { item1, item2, item3 };
+            var items = new List<ToDoItem> {item1, item2, item3};
 
             var spec = new IncompleteItemsSpec();
-            List<ToDoItem> filteredList = items
+            var filteredList = items
                 .Where(spec.WhereExpressions.First().Compile())
                 .ToList();
 

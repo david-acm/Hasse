@@ -6,7 +6,6 @@ namespace Hasse.Web.Endpoints.ProjectEndpoints
     {
         public const string Route = "/Projects";
 
-        [Required]
-        public string Name { get; set; }
+        [Required] public string Name { get; set; }
     }
 }

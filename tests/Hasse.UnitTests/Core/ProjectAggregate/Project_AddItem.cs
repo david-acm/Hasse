@@ -6,7 +6,7 @@ namespace Hasse.UnitTests.Core.ProjectAggregate
 {
     public class Project_AddItem
     {
-        private Project _testProject = new Project("some name");
+        private readonly Project _testProject = new("some name");
 
         [Fact]
         public void AddsItemToItems()

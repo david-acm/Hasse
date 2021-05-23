@@ -18,7 +18,7 @@ namespace Hasse.Core.ProjectAggregate
 
         public override string ToString()
         {
-            string status = IsDone ? "Done!" : "Not done.";
+            var status = IsDone ? "Done!" : "Not done.";
             return $"{Id}: Status: {status} - {Title} - {Description}";
         }
     }

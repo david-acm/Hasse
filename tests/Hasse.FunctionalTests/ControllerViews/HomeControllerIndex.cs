@@ -18,9 +18,9 @@ namespace Hasse.FunctionalTests.ControllerViews
         [Fact]
         public async Task ReturnsViewWithCorrectMessage()
         {
-            HttpResponseMessage response = await _client.GetAsync("/");
+            var response = await _client.GetAsync("/");
             response.EnsureSuccessStatusCode();
-            string stringResponse = await response.Content.ReadAsStringAsync();
+            var stringResponse = await response.Content.ReadAsStringAsync();
 
             Assert.Contains("Hasse.Web", stringResponse);
         }

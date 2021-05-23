@@ -1,20 +1,21 @@
 ﻿@page
-@model Hasse.Web.Pages.ToDoRazorPage.IncompleteModel
+@model Hasse.Web.Pages.ProjectDetails.IncompleteModel
 
 <h2>Incomplete To Do Items (Razor Page)</h2>
 <ul>
     @foreach (var item in Model.ToDoItems)
     {
         <li>
-            @item.Title @if (item.IsDone)
-        {
-            <span>DONE!</span>
-        }
-        else
-        {
-        <span>NOT DONE</span>
-        }
-            <br />@item.Description
+            @item.Title
+            @if (item.IsDone)
+            {
+                <span>DONE!</span>
+            }
+            else
+            {
+                <span>NOT DONE</span>
+            }
+            <br/>@item.Description
         </li>
     }
 </ul>
