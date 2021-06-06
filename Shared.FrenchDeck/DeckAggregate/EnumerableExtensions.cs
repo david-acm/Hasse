@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Ardalis.GuardClauses;
 
-namespace Hasse.Core.DeckAggregate
+namespace Shared.CardGame.DeckAggregate
 {
 	public static class EnumerableExtensions
 	{

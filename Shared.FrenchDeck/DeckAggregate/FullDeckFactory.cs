@@ -1,6 +1,6 @@
-﻿namespace Hasse.Core.DeckAggregate
+﻿namespace Shared.CardGame.DeckAggregate
 {
-    public class FullDeckFactory : DeckFactory
+    public sealed class FullDeckFactory : DeckFactory
     {
         protected override FullDeck CreateDeck()
         {

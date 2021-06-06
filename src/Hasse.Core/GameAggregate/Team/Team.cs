@@ -2,14 +2,15 @@
 using System.Linq;
 using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
+using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate.Team
 {
     public class Team : BaseGameEntity
     {
-        private readonly List<Player.Player> _players = new();
+        private readonly List<IPlayer> _players = new();
 
-        internal Team((Player.Player, Player.Player) players)
+        internal Team((IPlayer, IPlayer) players)
         {
             Guard.Against.Null(players, nameof(players));
             Guard.Against.Null(players.Item1, "players.Item1");
@@ -21,14 +22,16 @@ namespace Hasse.Core.GameAggregate.Team
 
         public string Name { get; internal set; }
 
-        public IReadOnlyCollection<Player.Player> Players => _players;
+        public IReadOnlyCollection<IPlayer> Players => _players;
 
         public override IPrototype DeepCopy()
         {
-            var player1 = (Player.Player) _players.ElementAt(0).DeepCopy();
-            var player2 = (Player.Player) _players.ElementAt(1).DeepCopy();
+            var player1 = (IPlayer) _players.ElementAt(0).DeepCopy();
+            var player2 = (IPlayer) _players.ElementAt(1).DeepCopy();
 
             return new Team((player1, player2));
         }
+
+        public override string ToString() => $"{_players[0]} and {_players[1]}";
     }
 }

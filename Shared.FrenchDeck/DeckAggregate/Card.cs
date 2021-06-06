@@ -2,7 +2,7 @@
 using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
 
-namespace Hasse.Core.DeckAggregate
+namespace Shared.CardGame.DeckAggregate
 {
     public class Card : BaseGameEntity, IEquatable<Card>
     {
@@ -43,9 +43,6 @@ namespace Hasse.Core.DeckAggregate
 	        return HashCode.Combine(Suit, Rank);
         }
 
-        public override string ToString()
-        {
-	        return Name;
-        }
+        public override string ToString() => $"{Rank.Symbol}  {Suit.Symbol}\t{Name}";
     }
 }

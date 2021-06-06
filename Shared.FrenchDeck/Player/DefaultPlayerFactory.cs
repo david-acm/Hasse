@@ -1,4 +1,4 @@
-﻿namespace Hasse.Core.GameAggregate.Player
+﻿namespace Shared.CardGame.Player
 {
     public class DefaultPlayerFactory : PlayerFactory
     {

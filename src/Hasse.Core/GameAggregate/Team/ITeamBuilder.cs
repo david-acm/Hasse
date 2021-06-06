@@ -1,11 +1,11 @@
 ﻿using System;
-using Hasse.Core.GameAggregate.Player;
 using Hasse.SharedKernel;
+using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate.Team
 {
     public interface ITeamBuilder : ILazyBuilder<Team>
     {
-        TeamBuilder WithPlayer(Action<IPlayerBuilder> builder);
+	    ITeamBuilder WithPlayer(Action<IPlayerBuilder> builder);
     }
 }

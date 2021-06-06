@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Ardalis.SmartEnum;
 
-namespace Hasse.Core.DeckAggregate
+namespace Shared.CardGame.DeckAggregate
 {
     public abstract class Suit : SmartEnum<Suit>
     {

@@ -1,21 +1,21 @@
 ﻿using System;
-using Hasse.Core.GameAggregate.Player;
 using Hasse.Core.GameAggregate.Team;
 using Hasse.SharedKernel;
+using Shared.CardGame.DeckAggregate;
 
 namespace Hasse.Core.GameAggregate
 {
-    public sealed class GameBuilder : LazyBuilder<HasseGame, GameBuilder>
+    public sealed class HasseGameBuilder : LazyBuilder<HasseGame, HasseGameBuilder>
     {
         private readonly ITeamBuilderFactory _teamBuilderFactory;
         private (Team.Team, Team.Team) _teams;
 
-        public GameBuilder(ITeamBuilderFactory teamBuilderFactory)
+        public HasseGameBuilder(ITeamBuilderFactory teamBuilderFactory)
         {
             _teamBuilderFactory = teamBuilderFactory;
         }
 
-        public GameBuilder WithTeam(string name, Action<ITeamBuilder> actions)
+        public HasseGameBuilder WithTeam(string name, Action<ITeamBuilder> actions)
         {
             var teamBuilder = _teamBuilderFactory.GetTeamBuilder(name);
             actions(teamBuilder);

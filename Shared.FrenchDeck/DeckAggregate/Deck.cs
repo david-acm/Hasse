@@ -4,12 +4,12 @@ using System.Linq;
 using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
 
-namespace Hasse.Core.DeckAggregate
+namespace Shared.CardGame.DeckAggregate
 {
 	// Separate DeckAggregate into different project
 	public abstract class Deck : BaseGameEntity
 	{
-		private static readonly Random Rng = new();
+		private static readonly Random Rng = new(9621787);
 		private readonly IEnumerable<Rank> _ranks;
 		private readonly IEnumerable<Suit> _suits;
 

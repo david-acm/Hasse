@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hasse.Core.DeckAggregate;
 using Hasse.Core.GameAggregate;
 using Hasse.SharedKernel;
+using Shared.CardGame.DeckAggregate;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -10,10 +10,6 @@ namespace Hasse.UnitTests.Core.GameAggregate
 {
 	public class GameConstructorShould
 	{
-		private const string Player1Name = "David";
-		private const string Player2Name = "Allison";
-		private const string Player3Name = "Greta";
-		private const string Player4Name = "Joe";
 		private readonly HasseGame _hasseGame;
 		private readonly ITestOutputHelper _logger;
 
@@ -99,11 +95,11 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		}
 
 		[Theory]
-		[InlineData(Player1Name)]
-		[InlineData(Player2Name)]
-		[InlineData(Player3Name)]
-		[InlineData(Player4Name)]
-		public void ShouldHaveAssignedNames(string name)
+		[InlineData(HappyPathGameBuilder.Player1Name)]
+		[InlineData(HappyPathGameBuilder.Player2Name)]
+		[InlineData(HappyPathGameBuilder.Player3Name)]
+		[InlineData(HappyPathGameBuilder.Player4Name)]
+		public void HaveAssignedNames(string name)
 		{
 			_hasseGame.Teams.ToList().ForEach(t => Assert.NotNull(t.Name));
 
@@ -113,59 +109,14 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		}
 
 		[Fact]
-		public void SamePositionDifferentDeckShouldNotBeEqual()
+		public void HavePlayersAssignedToGame()
 		{
-			var deckFactory = new HasseDeckFactory();
-			var deck1 = deckFactory.GetDeck();
-			var deck2 = deckFactory.GetDeck();
-
-			Assert.NotEqual(deck1, deck2);
-			Assert.NotEqual(
-				deck1.Cards.FirstOrDefault(),
-				deck2.Cards.FirstOrDefault());
-		}
-
-		[Fact]
-		public void SuitsShouldBeEqual()
-		{
-			var diamond1 = Suit.Diamond;
-			var diamond2 = Suit.Diamond;
-
-			Assert.StrictEqual(diamond1, diamond2);
-		}
-
-		[Fact]
-		public void ShouldShuffleUponConstruction()
-		{
-			var gameCards = _hasseGame.Deck.Cards;
-
-			var sorted = gameCards.OrderBy(c => c.Rank).ToList();
-
-			gameCards.ForEach(gc =>
-				_logger.WriteLine($"{gc.Suit.Symbol} {gc.Name}", gc.Suit.Color));
-
-			Assert.NotEqual(sorted.First(), gameCards.First());
-			Assert.NotEqual(sorted.Last(), gameCards.First());
-		}
-
-		[Fact]
-		public void DealShouldGive6CardsToEachPlayer()
-		{
-			_hasseGame.Deal();
-			_hasseGame.Deal();
-
-			Assert.All(
-				_hasseGame.Players,
-				p => Assert.Equal(6, p.Hand.Count));
-		}
-
-		// TODO: Separate Tests by Aggregat/Method/Fact
-		[Fact]
-		public void DeckShouldBeEmptyAfterDeal()
-		{
-			_hasseGame.Deal();
-
-			Assert.Empty(_hasseGame.Deck.Cards);
+			Assert.All(_hasseGame.Players, 
+				p =>
+				{
+					_logger.WriteLine(((HasseGame)p.CurrentGame).ToString());
+					Assert.Equal(p.CurrentGame, _hasseGame);
+				});
 		}
 	}
 }

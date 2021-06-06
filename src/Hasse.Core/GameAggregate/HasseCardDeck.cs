@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
+using Shared.CardGame.DeckAggregate;
 
-namespace Hasse.Core.DeckAggregate
+namespace Hasse.Core.GameAggregate
 {
     public class HasseCardDeck : Deck
     {

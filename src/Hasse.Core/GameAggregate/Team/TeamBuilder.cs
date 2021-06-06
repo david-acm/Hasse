@@ -1,14 +1,14 @@
 ﻿using System;
 using Ardalis.GuardClauses;
-using Hasse.Core.GameAggregate.Player;
 using Hasse.SharedKernel;
+using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate.Team
 {
     public sealed class TeamBuilder : LazyBuilder<Team, TeamBuilder>, ITeamBuilder
     {
         private readonly IPlayerBuilder _playerBuilder;
-        private (Player.Player, Player.Player) _players;
+        private (IPlayer, IPlayer) _players;
 
         public TeamBuilder(string name, IPlayerBuilder playerBuilder)
         {
@@ -19,7 +19,7 @@ namespace Hasse.Core.GameAggregate.Team
             _playerBuilder = playerBuilder;
         }
 
-        public TeamBuilder WithPlayer(Action<IPlayerBuilder> builder)
+        public ITeamBuilder WithPlayer(Action<IPlayerBuilder> builder)
         {
             builder(_playerBuilder);
 
@@ -30,7 +30,7 @@ namespace Hasse.Core.GameAggregate.Team
             return this;
         }
 
-        private void AddPlayer(Player.Player player)
+        private void AddPlayer(IPlayer player)
         {
             if (_players.Item1 is null)
                 _players.Item1 = player;
@@ -47,20 +47,5 @@ namespace Hasse.Core.GameAggregate.Team
     public interface ITeamBuilderFactory
     {
         ITeamBuilder GetTeamBuilder(string name);
-    }
-
-    public class TeamBuilderFactory : ITeamBuilderFactory
-    {
-        private readonly IPlayerBuilder _playerBuilder;
-
-        public TeamBuilderFactory(IPlayerBuilder playerBuilder)
-        {
-            _playerBuilder = playerBuilder;
-        }
-
-        public ITeamBuilder GetTeamBuilder(string name)
-        {
-            return new TeamBuilder(name, _playerBuilder);
-        }
     }
 }

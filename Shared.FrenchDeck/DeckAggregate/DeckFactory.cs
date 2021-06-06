@@ -1,4 +1,4 @@
-﻿namespace Hasse.Core.DeckAggregate
+﻿namespace Shared.CardGame.DeckAggregate
 {
     public abstract class DeckFactory
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
 
-namespace Hasse.Core.DeckAggregate
+namespace Shared.CardGame.DeckAggregate
 {
     public class FullDeck : Deck
     {

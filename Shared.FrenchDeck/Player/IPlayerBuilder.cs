@@ -1,6 +1,6 @@
 ﻿using Hasse.SharedKernel;
 
-namespace Hasse.Core.GameAggregate.Player
+namespace Shared.CardGame.Player
 {
     public interface IPlayerBuilder : ILazyBuilder<Player>
     {

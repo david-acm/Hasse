@@ -1,10 +1,10 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace Hasse.Core.DeckAggregate
+namespace Shared.CardGame.DeckAggregate
 {
     public abstract class Rank : SmartEnum<Rank>
     {
-        public static readonly Rank One = new OneType();
+        public static readonly Rank Joker = new JockerType();
         public static readonly Rank Two = new TwoType();
         public static readonly Rank Three = new ThreeType();
         public static readonly Rank Four = new FourType();
@@ -25,13 +25,13 @@ namespace Hasse.Core.DeckAggregate
 
         public abstract string Symbol { get; }
 
-        private sealed class OneType : Rank
+        private sealed class JockerType : Rank
         {
-            public OneType() : base(nameof(OneType), 1)
+            public JockerType() : base(nameof(JockerType), 1)
             {
             }
 
-            public override string Symbol => Value.ToString();
+            public override string Symbol => "Joker";
         }
 
         private sealed class TwoType : Rank

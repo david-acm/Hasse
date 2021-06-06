@@ -1,5 +1,5 @@
 ﻿using System;
-using Hasse.Core.GameAggregate.Player;
+using Shared.CardGame.Player;
 using Xunit;
 
 namespace Hasse.UnitTests.Core.GameAggregate
