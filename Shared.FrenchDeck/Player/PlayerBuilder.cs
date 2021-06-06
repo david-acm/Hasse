@@ -1,12 +1,10 @@
-﻿using Hasse.SharedKernel;
-
-namespace Shared.CardGame.Player
+﻿namespace Shared.CardGame.Player
 {
-	public class PlayerBuilder : LazyBuilder<Player, PlayerBuilder>, IPlayerBuilder
+	public class PlayerBuilder : BasePlayerBuilder<Player>
 	{
 		private string _name;
 
-		public IPlayerBuilder WithName(string name)
+		public override PlayerBuilder WithName(string name)
 		{
 			_name = name;
 			return this;

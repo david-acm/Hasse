@@ -3,7 +3,7 @@ using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate
 {
-	public class DiagonalTeamPlayer : Player
+	public class DiagonalTeamPlayer : Player, IPlayer
 	{
 		public enum TablePosition
 		{

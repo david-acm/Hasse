@@ -1,3 +1,5 @@
+using System;
+
 namespace Hasse.SharedKernel
 {
     public interface ILazyBuilder<TSubject>

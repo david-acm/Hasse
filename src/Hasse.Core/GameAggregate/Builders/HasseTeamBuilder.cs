@@ -2,7 +2,7 @@
 using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
 
-namespace Hasse.Core.GameAggregate
+namespace Hasse.Core.GameAggregate.Builders
 {
     public class HasseTeamBuilder : LazyBuilder<Team.Team, HasseTeamBuilder>
     {

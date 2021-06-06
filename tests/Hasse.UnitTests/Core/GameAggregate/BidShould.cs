@@ -1,4 +1,5 @@
 ﻿using Hasse.Core.GameAggregate;
+using Hasse.Core.GameAggregate.Exceptions;
 using Xunit;
 
 namespace Hasse.UnitTests.Core.GameAggregate

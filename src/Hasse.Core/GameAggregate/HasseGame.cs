@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hasse.Core.GameAggregate.Exceptions;
 using Hasse.Core.GameAggregate.Team;
 using Hasse.SharedKernel;
 using Shared.CardGame.DeckAggregate;

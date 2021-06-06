@@ -5,47 +5,58 @@ using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate.Team
 {
-    public sealed class TeamBuilder : LazyBuilder<Team, TeamBuilder>, ITeamBuilder
-    {
-        private readonly IPlayerBuilder _playerBuilder;
-        private (IPlayer, IPlayer) _players;
+	public sealed class TeamBuilder<TPlayer, TPlayerBuilder> 
+		: LazyBuilder<Team, TeamBuilder<TPlayer, TPlayerBuilder>>,
+			ITeamBuilder<TPlayer, TPlayerBuilder>
+		where TPlayer : IPlayer
+		where TPlayerBuilder : BasePlayerBuilder<TPlayer>
+	{
+		private readonly TPlayerBuilder _playerBuilder;
+		private (IPlayer, IPlayer) _players;
 
-        public TeamBuilder(string name, IPlayerBuilder playerBuilder)
-        {
-            Guard.Against.NullOrWhiteSpace(name, nameof(name));
+		public TeamBuilder(string name, TPlayerBuilder playerBuilder) : this(playerBuilder)
+		{
+			Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
-            Do(t => t.Name = name);
+			WithName(name);
+		}
 
-            _playerBuilder = playerBuilder;
-        }
+		public TeamBuilder(TPlayerBuilder playerBuilder)
+		{
+			Guard.Against.Null(playerBuilder, nameof(playerBuilder));
 
-        public ITeamBuilder WithPlayer(Action<IPlayerBuilder> builder)
-        {
-            builder(_playerBuilder);
+			_playerBuilder = playerBuilder;
+		}
 
-            var player = _playerBuilder.Build();
+		public ITeamBuilder<TPlayer, TPlayerBuilder> WithPlayer(Action<TPlayerBuilder> builder)
+		{
+			builder(_playerBuilder);
 
-            AddPlayer(player);
+			var player = _playerBuilder.Build();
 
-            return this;
-        }
+			AddPlayer(player);
 
-        private void AddPlayer(IPlayer player)
-        {
-            if (_players.Item1 is null)
-                _players.Item1 = player;
-            else if (_players.Item2 is null)
-                _players.Item2 = player;
-        }
+			return this;
+		}
 
-        protected override Team Construct()
-        {
-            return new(_players);
-        }
-    }
+		public ITeamBuilder<TPlayer, TPlayerBuilder> WithName(string name)
+		{
+			Do(t => t.Name = name);
 
-    public interface ITeamBuilderFactory
-    {
-        ITeamBuilder GetTeamBuilder(string name);
-    }
+			return this;
+		}
+
+		private void AddPlayer(IPlayer player)
+		{
+			if (_players.Item1 is null)
+				_players.Item1 = player;
+			else if (_players.Item2 is null)
+				_players.Item2 = player;
+		}
+
+		protected override Team Construct()
+		{
+			return new(_players);
+		}
+	}
 }

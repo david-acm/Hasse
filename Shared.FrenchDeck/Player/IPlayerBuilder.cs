@@ -1,9 +1,10 @@
-﻿using Hasse.SharedKernel;
-
-namespace Shared.CardGame.Player
+﻿namespace Shared.CardGame.Player
 {
-    public interface IPlayerBuilder : ILazyBuilder<Player>
-    {
-        IPlayerBuilder WithName(string name);
-    }
+	public interface IPlayerBuilder<TPlayer>
+		where TPlayer : IPlayer
+	{
+		IPlayerBuilder<TPlayer> WithName(string name);
+
+		TPlayer Build();
+	}
 }

@@ -4,8 +4,8 @@ using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate.Team
 {
-    public interface ITeamBuilder : ILazyBuilder<Team>
+    public interface ITeamBuilder<TPlayer, out TPlayerBuilder> : ILazyBuilder<Team>
     {
-	    ITeamBuilder WithPlayer(Action<IPlayerBuilder> builder);
+	    ITeamBuilder<TPlayer, TPlayerBuilder> WithPlayer(Action<TPlayerBuilder> builder);
     }
 }
