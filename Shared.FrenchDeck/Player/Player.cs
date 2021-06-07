@@ -25,7 +25,7 @@ namespace Shared.CardGame.Player
 			return (IPrototype) MemberwiseClone();
 		}
 
-		public IPrototype DeepCopy()
+		public virtual IPrototype DeepCopy()
 		{
 			return new Player(Name);
 		}

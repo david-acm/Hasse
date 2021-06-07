@@ -1,25 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Hasse.Core.GameAggregate.Team;
 using Hasse.SharedKernel;
+using Shared.CardGame;
 using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate.Builders
 {
 	public class
-		CardGameTeamBuilder<TPlayer, TPlayerBuilder> : LazyBuilder<HasseGame,
-			CardGameTeamBuilder<TPlayer, TPlayerBuilder>>
+		CardGameTeamBuilder<TSelf, TPlayer, TPlayerBuilder> : LazyBuilder<HasseGame,
+			CardGameTeamBuilder<TSelf, TPlayer, TPlayerBuilder>>
+		where TSelf : CardGameTeamBuilder<TSelf, TPlayer, TPlayerBuilder>
 		where TPlayer : IPlayer
 		where TPlayerBuilder : BasePlayerBuilder<TPlayer>
 	{
 		private readonly ITeamBuilderFactory<TPlayer, TPlayerBuilder> _teamBuilderFactory;
-		private (Team.Team, Team.Team) _teams;
+		protected (Team.Team, Team.Team) _teams;
 
 		public CardGameTeamBuilder(ITeamBuilderFactory<TPlayer, TPlayerBuilder> teamBuilderFactory)
 		{
 			_teamBuilderFactory = teamBuilderFactory;
 		}
 
-		public CardGameTeamBuilder<TPlayer, TPlayerBuilder> WithTeam(string name,
+		public TSelf WithTeam(string name,
 			Action<ITeamBuilder<TPlayer, TPlayerBuilder>> actions)
 		{
 			var teamBuilder = _teamBuilderFactory.GetTeamBuilder(name);
@@ -30,7 +35,7 @@ namespace Hasse.Core.GameAggregate.Builders
 
 			AddTeam(team);
 
-			return this;
+			return (TSelf)this;
 		}
 
 		protected override HasseGame Construct()

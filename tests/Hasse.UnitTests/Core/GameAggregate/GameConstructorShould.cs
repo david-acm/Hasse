@@ -118,5 +118,17 @@ namespace Hasse.UnitTests.Core.GameAggregate
 					Assert.Equal(p.CurrentGame, _hasseGame);
 				});
 		}
+
+		[Fact]
+		public void ShouldHaveCurrentHandWithOrderedTurnsQueue()
+		{
+			// Arrange
+			// Act
+			// Assert
+			Assert.Equal(4, _hasseGame.CurrentHand.Turns.Count);
+			Assert.Equal(_hasseGame.Players.ElementAt(1), _hasseGame.CurrentHand.Turns.First().Player);
+			var playerAtOne = _hasseGame.Players.First(p => p.Position == DiagonalTeamPlayer.TablePosition.One);
+			Assert.Equal(playerAtOne, _hasseGame.CurrentHand.Turns.ElementAt(3).Player);
+		}
 	}
 }

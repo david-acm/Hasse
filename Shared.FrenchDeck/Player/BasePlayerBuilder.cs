@@ -8,6 +8,8 @@ namespace Shared.CardGame.Player
 	{
 		private string _name;
 
+		protected abstract TPLayer playerType { get; set; }
+
 		public Type PlayerType => typeof(TPLayer); 
 
 		public virtual BasePlayerBuilder<TPLayer> WithName(string name)

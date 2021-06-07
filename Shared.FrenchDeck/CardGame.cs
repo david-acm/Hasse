@@ -9,7 +9,7 @@ namespace Shared.CardGame
 {
 	public abstract class CardGame
 	{
-		private readonly IEnumerable<IPlayer> _players;
+		protected readonly IEnumerable<IPlayer> _players;
 
 		protected CardGame(DeckFactory deckFactory, IEnumerable<IPlayer> players)
 		{
@@ -19,7 +19,7 @@ namespace Shared.CardGame
 
 		public Deck Deck { get; }
 
-		public IReadOnlyList<IPlayer> Players =>
+		public virtual IReadOnlyList<IPlayer> Players =>
 			_players.ToList().AsReadOnly();
 	}
 }

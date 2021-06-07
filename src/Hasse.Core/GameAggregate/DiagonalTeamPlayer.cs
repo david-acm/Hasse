@@ -1,9 +1,10 @@
 ﻿using Hasse.Core.GameAggregate.Team;
+using Hasse.SharedKernel;
 using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate
 {
-	public class DiagonalTeamPlayer : Player, IPlayer
+	public class DiagonalTeamPlayer : Player
 	{
 		public enum TablePosition
 		{
@@ -18,5 +19,11 @@ namespace Hasse.Core.GameAggregate
 		}
 
 		public TablePosition Position { get; internal set; }
+
+
+		public override IPrototype DeepCopy()
+		{
+			return new DiagonalTeamPlayer(Name);
+		}
 	}
 }

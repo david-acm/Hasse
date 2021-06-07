@@ -14,7 +14,7 @@ namespace Hasse.SharedKernel
             return actions.Aggregate(Construct(), (p, f) => f(p));
         }
 
-        protected TSelf Do(Action<TSubject> action)
+        public TSelf Do(Action<TSubject> action)
         {
             return AddAction(action);
         }

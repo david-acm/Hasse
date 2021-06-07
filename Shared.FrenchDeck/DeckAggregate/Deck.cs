@@ -58,7 +58,7 @@ namespace Shared.CardGame.DeckAggregate
 		}
 		
 	  // TODO: Change visibility
-		protected void Shuffle()
+		public void Shuffle()
 		{
 			var n = Cards.Count;
 			var cardList = Cards.ToArray();

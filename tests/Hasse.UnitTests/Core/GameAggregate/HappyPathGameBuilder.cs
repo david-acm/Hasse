@@ -17,6 +17,7 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		protected override HasseGame Construct()
 		{
 			var gameBuilder = new HasseGameBuilder();
+			
 
 			gameBuilder
 				.WithTeam("Colombia",
@@ -34,7 +35,8 @@ namespace Hasse.UnitTests.Core.GameAggregate
 							.WithPosition(Three))
 						.WithPlayer(p => p
 							.WithName(Player4Name)
-							.WithPosition(Four)));
+							.WithPosition(Four)))
+				.WithDealer(Two);
 
 			return gameBuilder.Build();
 		}

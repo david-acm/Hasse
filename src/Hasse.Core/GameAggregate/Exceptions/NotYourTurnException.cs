@@ -2,7 +2,7 @@
 
 namespace Hasse.Core.GameAggregate.Exceptions
 {
-	public class AlreadyBidException : Exception
+	public class NotYourTurnException : Exception
 	{
 	}
 }

@@ -1,25 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Hasse.Core.GameAggregate.Exceptions;
 using Hasse.Core.GameAggregate.Team;
 using Hasse.SharedKernel;
 using Shared.CardGame.DeckAggregate;
+using Shared.CardGame.Player;
 
 namespace Hasse.Core.GameAggregate
 {
 	public class HasseGame : TwoTeamsCardGame
 	{
 		private static readonly DeckFactory DeckFactory = new PennDeckFactory<HasseGame>();
-		private readonly List<Bid> _bids = new();
+		private readonly List<Hand> _hands = new();
+		private readonly IPlayer _dealer;
+
+		internal HasseGame(Team.Team team1, Team.Team team2, IPlayer dealer)
+			: base(team1, team2, DeckFactory)
+		{
+			Players.ForEach(p => p.CurrentGame = this);
+			_dealer = dealer;
+			CurrentHand = new Hand(this, dealer);
+			_hands.Add(CurrentHand);
+		}
 
 		internal HasseGame(Team.Team team1, Team.Team team2)
 			: base(team1, team2, DeckFactory)
 		{
 			Players.ForEach(p => p.CurrentGame = this);
+			CurrentHand = new Hand(this, Players.First());
+			_hands.Add(CurrentHand);
 		}
 
-		public IReadOnlyList<Bid> Biddings => _bids.AsReadOnly();
+		/// <summary>
+		/// Gets the current hand being played.
+		/// </summary>
+		public Hand CurrentHand { get; }
+
+		/// <summary>
+		/// Gets all the players of the game.
+		/// </summary>
+		public new IEnumerable<DiagonalTeamPlayer> Players => Teams.SelectMany(t => t.Players).Select(p => (DiagonalTeamPlayer)p);
 
 		public override IPrototype DeepCopy()
 		{
@@ -29,36 +48,10 @@ namespace Hasse.Core.GameAggregate
 			return new HasseGame(team1, team2);
 		}
 
-		public void Bid(Bid bid)
+		public HasseGame Bid(Bid bid)
 		{
-			// TODO: Change to guard clause
-			ValidateBid(bid);
-
-			_bids.Add(bid);
-		}
-
-		private void ValidateBid(Bid bid)
-		{
-			try
-			{
-				var noBiddings = !Biddings.Any();
-				var underLastBiddings = Biddings.Any(b => b.Value >= bid.Value);
-				var alreadyBid = Biddings.Any(b => b.Player == bid.Player);
-
-				if (noBiddings) return;
-				if (underLastBiddings) throw new BidUnderPermittedException();
-				if (alreadyBid) throw new AlreadyBidException();
-			}
-			catch (BidUnderPermittedException e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-			catch(AlreadyBidException e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
+			CurrentHand.Bid(bid);
+			return this;
 		}
 	}
 }
