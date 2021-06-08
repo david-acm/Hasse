@@ -1,7 +1,6 @@
-﻿using Hasse.SharedKernel;
-using Shared.CardGame.Player;
+﻿using Shared.CardGame.Player;
 
-namespace Hasse.Core.GameAggregate.Team
+namespace Shared.TwoTeamsCardGame.Team
 {
 	public class TeamBuilderFactory<TPlayer, TPlayerBuilder> 
 		: ITeamBuilderFactory<TPlayer, TPlayerBuilder>

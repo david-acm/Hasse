@@ -1,6 +1,6 @@
 ﻿using Shared.CardGame.Player;
 
-namespace Hasse.Core.GameAggregate.Team
+namespace Shared.TwoTeamsCardGame.Team
 {
 	public interface ITeamBuilderFactory<TPlayer, out TPlayerBuilder>
 		where TPlayerBuilder : BasePlayerBuilder<TPlayer>

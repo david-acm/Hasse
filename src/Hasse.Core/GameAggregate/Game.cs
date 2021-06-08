@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hasse.Core.GameAggregate.Team;
 using Hasse.SharedKernel;
+using Shared.BiddingCardGame;
 using Shared.CardGame.DeckAggregate;
 using Shared.CardGame.Player;
+using Shared.TwoTeamsCardGame;
+using Shared.TwoTeamsCardGame.Team;
 
 namespace Hasse.Core.GameAggregate
 {
-	public class HasseGame : TwoTeamsCardGame
+	public class Game : TwoTeamsCardGame
 	{
-		private static readonly DeckFactory DeckFactory = new PennDeckFactory<HasseGame>();
+		private static readonly DeckFactory DeckFactory = new PennDeckFactory<Game>();
 		private readonly List<Hand> _hands = new();
 		private readonly IPlayer _dealer;
 
-		internal HasseGame(Team.Team team1, Team.Team team2, IPlayer dealer)
+		internal Game(Team team1, Team team2, IPlayer dealer)
 			: base(team1, team2, DeckFactory)
 		{
 			Players.ForEach(p => p.CurrentGame = this);
@@ -22,7 +24,7 @@ namespace Hasse.Core.GameAggregate
 			_hands.Add(CurrentHand);
 		}
 
-		internal HasseGame(Team.Team team1, Team.Team team2)
+		internal Game(Team team1, Team team2)
 			: base(team1, team2, DeckFactory)
 		{
 			Players.ForEach(p => p.CurrentGame = this);
@@ -42,13 +44,13 @@ namespace Hasse.Core.GameAggregate
 
 		public override IPrototype DeepCopy()
 		{
-			var team1 = (Team.Team) Teams.ElementAt(0)?.DeepCopy();
-			var team2 = (Team.Team) Teams.ElementAt(1)?.DeepCopy();
+			var team1 = (Team) Teams.ElementAt(0)?.DeepCopy();
+			var team2 = (Team) Teams.ElementAt(1)?.DeepCopy();
 
-			return new HasseGame(team1, team2);
+			return new Game(team1, team2);
 		}
 
-		public HasseGame Bid(Bid bid)
+		public Game Bid(Bid bid)
 		{
 			CurrentHand.Bid(bid);
 			return this;

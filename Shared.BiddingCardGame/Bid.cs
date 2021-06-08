@@ -1,7 +1,7 @@
 ﻿using System;
 using Shared.CardGame.Player;
 
-namespace Hasse.Core.GameAggregate
+namespace Shared.BiddingCardGame
 {
 	public class Bid : IEquatable<Bid>
 	{

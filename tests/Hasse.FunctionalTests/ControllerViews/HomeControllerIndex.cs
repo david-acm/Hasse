@@ -22,7 +22,7 @@ namespace Hasse.FunctionalTests.ControllerViews
             response.EnsureSuccessStatusCode();
             var stringResponse = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("Hasse.Web", stringResponse);
+            Assert.Contains("Default.Web", stringResponse);
         }
     }
 }

@@ -3,7 +3,7 @@ using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
 using Shared.CardGame.Player;
 
-namespace Hasse.Core.GameAggregate.Team
+namespace Shared.TwoTeamsCardGame.Team
 {
 	public sealed class TeamBuilder<TPlayer, TPlayerBuilder> 
 		: LazyBuilder<Team, TeamBuilder<TPlayer, TPlayerBuilder>>,

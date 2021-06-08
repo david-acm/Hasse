@@ -1,0 +1,18 @@
+{
+  "solution": {
+    "path": "Hasse.sln",
+    "projects": [
+      "Negative5.Core\\Negative5.Core.csproj",
+      "Shared.BiddingCardGame\\Shared.BiddingCardGame.csproj",
+      "Shared.FrenchDeck\\Shared.CardGame.csproj",
+      "Shared.TwoTeamsCardGame\\Shared.TwoTeamsCardGame.csproj",
+      "src\\Hasse.Core\\Hasse.Core.csproj",
+      "src\\Hasse.Infrastructure\\Hasse.Infrastructure.csproj",
+      "src\\Hasse.SharedKernel\\Hasse.SharedKernel.csproj",
+      "src\\Hasse.Web\\Hasse.Web.csproj",
+      "tests\\Hasse.FunctionalTests\\Hasse.FunctionalTests.csproj",
+      "tests\\Hasse.IntegrationTests\\Hasse.IntegrationTests.csproj",
+      "tests\\Hasse.UnitTests\\Hasse.UnitTests.csproj"
+    ]
+  }
+}

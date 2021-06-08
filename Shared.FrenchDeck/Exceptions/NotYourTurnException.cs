@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hasse.Core.GameAggregate.Exceptions
+namespace Shared.CardGame.Exceptions
 {
 	public class NotYourTurnException : Exception
 	{

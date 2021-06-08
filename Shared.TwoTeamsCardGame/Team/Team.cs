@@ -4,13 +4,13 @@ using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
 using Shared.CardGame.Player;
 
-namespace Hasse.Core.GameAggregate.Team
+namespace Shared.TwoTeamsCardGame.Team
 {
     public class Team : BaseGameEntity
     {
         private readonly List<IPlayer> _players = new();
 
-        internal Team((IPlayer, IPlayer) players)
+        public Team((IPlayer, IPlayer) players)
         {
             Guard.Against.Null(players, nameof(players));
             Guard.Against.Null(players.Item1, "players.Item1");
@@ -20,7 +20,7 @@ namespace Hasse.Core.GameAggregate.Team
             _players.Add(players.Item2);
         }
 
-        public string Name { get; internal set; }
+        public string Name { get; set; }
 
         public IReadOnlyCollection<IPlayer> Players => _players;
 

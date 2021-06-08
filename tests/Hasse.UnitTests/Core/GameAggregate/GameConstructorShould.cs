@@ -3,6 +3,7 @@ using System.Linq;
 using Hasse.Core.GameAggregate;
 using Hasse.SharedKernel;
 using Shared.CardGame.DeckAggregate;
+using Shared.TwoTeamsCardGame;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -10,14 +11,14 @@ namespace Hasse.UnitTests.Core.GameAggregate
 {
 	public class GameConstructorShould
 	{
-		private readonly HasseGame _hasseGame;
+		private readonly Game _game;
 		private readonly ITestOutputHelper _logger;
 
 		public GameConstructorShould(ITestOutputHelper logger)
 		{
 			_logger = logger;
 
-			_hasseGame = new HappyPathGameBuilder();
+			_game = new HappyPathGameBuilder();
 		}
 
 		[Fact]
@@ -28,7 +29,7 @@ namespace Hasse.UnitTests.Core.GameAggregate
 			// Execute
 
 			// Assert
-			var cardList = _hasseGame.Deck.Cards.ToList();
+			var cardList = _game.Deck.Cards.ToList();
 			cardList.ForEach(card => _logger.WriteLine($"{card.Suit.Symbol} {card.Name}"));
 
 			Assert.Equal(24, cardList.Count);
@@ -42,7 +43,7 @@ namespace Hasse.UnitTests.Core.GameAggregate
 			// Execute
 
 			// Assert
-			var suitList = _hasseGame.Deck.Suits;
+			var suitList = _game.Deck.Suits;
 			suitList.ForEach(s => _logger.WriteLine($"{s.PluralizeName()} {s.Symbol}"));
 
 			Assert.Equal(4, suitList.Count());
@@ -56,7 +57,7 @@ namespace Hasse.UnitTests.Core.GameAggregate
 			// Execute
 
 			// Assert
-			IEnumerable<Rank> rankList = _hasseGame.Deck.Ranks;
+			IEnumerable<Rank> rankList = _game.Deck.Ranks;
 
 			rankList.ForEach(s => _logger.WriteLine(s.NormalizeName()));
 
@@ -71,7 +72,7 @@ namespace Hasse.UnitTests.Core.GameAggregate
 			// Execute
 
 			// Assert
-			var teamCount = _hasseGame.Teams.Count;
+			var teamCount = _game.Teams.Count;
 
 			Assert.Equal(2, teamCount);
 		}
@@ -79,19 +80,19 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		[Fact]
 		public void ShallowCopyAll()
 		{
-			var game = (HasseGame) _hasseGame.ShallowCopy();
+			var game = (Game) _game.ShallowCopy();
 
-			Assert.Same(game.Deck, _hasseGame.Deck);
-			Assert.NotSame(game.Teams, _hasseGame.Teams);
+			Assert.Same(game.Deck, _game.Deck);
+			Assert.NotSame(game.Teams, _game.Teams);
 		}
 
 		[Fact]
 		public void DeepCopyAll()
 		{
-			var game = (HasseGame) _hasseGame.DeepCopy();
+			var game = (Game) _game.DeepCopy();
 
-			Assert.NotSame(game.Teams, _hasseGame.Teams);
-			Assert.NotSame(game.Deck, _hasseGame.Deck);
+			Assert.NotSame(game.Teams, _game.Teams);
+			Assert.NotSame(game.Deck, _game.Deck);
 		}
 
 		[Theory]
@@ -101,9 +102,9 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		[InlineData(HappyPathGameBuilder.Player4Name)]
 		public void HaveAssignedNames(string name)
 		{
-			_hasseGame.Teams.ToList().ForEach(t => Assert.NotNull(t.Name));
+			_game.Teams.ToList().ForEach(t => Assert.NotNull(t.Name));
 
-			var names = _hasseGame.Teams.SelectMany(t => t.Players.Select(p => p.Name));
+			var names = _game.Teams.SelectMany(t => t.Players.Select(p => p.Name));
 
 			Assert.Contains(names, p => p == name);
 		}
@@ -111,11 +112,11 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		[Fact]
 		public void HavePlayersAssignedToGame()
 		{
-			Assert.All(_hasseGame.Players, 
+			Assert.All(_game.Players, 
 				p =>
 				{
-					_logger.WriteLine(((HasseGame)p.CurrentGame).ToString());
-					Assert.Equal(p.CurrentGame, _hasseGame);
+					_logger.WriteLine(((Game)p.CurrentGame).ToString());
+					Assert.Equal(p.CurrentGame, _game);
 				});
 		}
 
@@ -125,10 +126,10 @@ namespace Hasse.UnitTests.Core.GameAggregate
 			// Arrange
 			// Act
 			// Assert
-			Assert.Equal(4, _hasseGame.CurrentHand.Turns.Count);
-			Assert.Equal(_hasseGame.Players.ElementAt(1), _hasseGame.CurrentHand.Turns.First().Player);
-			var playerAtOne = _hasseGame.Players.First(p => p.Position == DiagonalTeamPlayer.TablePosition.One);
-			Assert.Equal(playerAtOne, _hasseGame.CurrentHand.Turns.ElementAt(3).Player);
+			Assert.Equal(4, _game.CurrentHand.Turns.Count);
+			Assert.Equal(_game.Players.ElementAt(1), _game.CurrentHand.Turns.First().Player);
+			var playerAtOne = _game.Players.First(p => p.Position == DiagonalTeamPlayer.TablePosition.One);
+			Assert.Equal(playerAtOne, _game.CurrentHand.Turns.ElementAt(3).Player);
 		}
 	}
 }

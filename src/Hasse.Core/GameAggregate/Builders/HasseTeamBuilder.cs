@@ -1,10 +1,12 @@
 ﻿using System;
 using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
+using Shared.TwoTeamsCardGame;
+using Shared.TwoTeamsCardGame.Team;
 
 namespace Hasse.Core.GameAggregate.Builders
 {
-    public class HasseTeamBuilder : LazyBuilder<Team.Team, HasseTeamBuilder>
+    public class HasseTeamBuilder : LazyBuilder<Team, HasseTeamBuilder>
     {
         private (DiagonalTeamPlayer, DiagonalTeamPlayer) _players;
         private readonly HassePlayerBuilder _playerBuilder;
@@ -18,7 +20,7 @@ namespace Hasse.Core.GameAggregate.Builders
             _playerBuilder = playerBuilder;
         }
 
-        protected override Team.Team Construct()
+        protected override Team Construct()
         {
             return new(_players);
         }

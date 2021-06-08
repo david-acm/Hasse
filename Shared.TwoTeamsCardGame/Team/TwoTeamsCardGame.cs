@@ -2,22 +2,24 @@
 using System.Linq;
 using Ardalis.GuardClauses;
 using Hasse.SharedKernel;
-using Shared.CardGame;
 using Shared.CardGame.DeckAggregate;
 using Shared.CardGame.Player;
 
-namespace Hasse.Core.GameAggregate.Team
+namespace Shared.TwoTeamsCardGame.Team
 {
-	public abstract class TwoTeamsCardGame : CardGame, IPrototype
+	public abstract class TwoTeamsCardGame : CardGame.CardGame, IPrototype
 	{
 		private readonly Queue<IPlayer> _dealQueue;
 		private readonly List<Team> _teams;
+		private readonly DeckFactory _deckFactory;
 
 		protected TwoTeamsCardGame(Team team1, Team team2, DeckFactory deckFactory)
 			: base(deckFactory, GetPlayers(team1, team2))
 		{
 			Guard.Against.Null(team1, nameof(team1));
 			Guard.Against.Null(team2, nameof(team2));
+
+			_deckFactory = deckFactory;
 
 			_teams = new List<Team> {team1, team2};
 
@@ -31,13 +33,7 @@ namespace Hasse.Core.GameAggregate.Team
 			return (IPrototype) MemberwiseClone();
 		}
 
-		public virtual IPrototype DeepCopy()
-		{
-			var team1 = (Team) _teams.ElementAt(0)?.DeepCopy();
-			var team2 = (Team) _teams.ElementAt(1)?.DeepCopy();
-
-			return new Negative5Game(team1, team2);
-		}
+		public abstract IPrototype DeepCopy();
 
 		private static IEnumerable<IPlayer> GetPlayers(Team team1, Team team2)
 		{

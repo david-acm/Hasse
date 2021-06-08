@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared.FrenchDeck\Shared.CardGame.csproj" />
+    <ProjectReference Include="..\src\Hasse.SharedKernel\Hasse.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

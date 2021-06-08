@@ -61,7 +61,7 @@ namespace Hasse.FunctionalTests
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder
-                .UseSolutionRelativeContentRoot("src/Hasse.Web")
+                .UseSolutionRelativeContentRoot("src/Default.Web")
                 .ConfigureServices(services =>
                 {
                     // Remove the app's ApplicationDbContext registration.

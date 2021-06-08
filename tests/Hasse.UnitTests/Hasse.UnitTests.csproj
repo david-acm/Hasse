@@ -29,6 +29,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared.BiddingCardGame\Shared.BiddingCardGame.csproj" />
     <ProjectReference Include="..\..\src\Hasse.Web\Hasse.Web.csproj" />
   </ItemGroup>
 

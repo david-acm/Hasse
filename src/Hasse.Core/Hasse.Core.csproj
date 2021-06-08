@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared.FrenchDeck\Shared.CardGame.csproj" />
+    <ProjectReference Include="..\..\Shared.BiddingCardGame\Shared.BiddingCardGame.csproj" />
     <ProjectReference Include="..\Hasse.SharedKernel\Hasse.SharedKernel.csproj" />
   </ItemGroup>
 

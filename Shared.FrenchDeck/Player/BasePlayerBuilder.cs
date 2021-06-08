@@ -8,7 +8,7 @@ namespace Shared.CardGame.Player
 	{
 		private string _name;
 
-		protected abstract TPLayer playerType { get; set; }
+		protected abstract Type playerType { get; }
 
 		public Type PlayerType => typeof(TPLayer); 
 

@@ -5,13 +5,13 @@ using Shared.CardGame.DeckAggregate;
 
 namespace Hasse.Core.GameAggregate
 {
-    public class HasseCardDeck : Deck
+    public class Deck : Shared.CardGame.DeckAggregate.Deck
     {
-        internal HasseCardDeck() : this(GetSuits(), GetRanks())
+        internal Deck() : this(GetSuits(), GetRanks())
         {
         }
 
-        private HasseCardDeck(IEnumerable<Suit> suits, IEnumerable<Rank> ranks) : base(suits, ranks)
+        private Deck(IEnumerable<Suit> suits, IEnumerable<Rank> ranks) : base(suits, ranks)
         {
         }
         private static List<Rank> GetRanks()
@@ -26,7 +26,7 @@ namespace Hasse.Core.GameAggregate
 
         public override IPrototype DeepCopy()
         {
-            return new HasseCardDeck(Suits, Ranks);
+            return new Deck(Suits, Ranks);
         }
     }
 }

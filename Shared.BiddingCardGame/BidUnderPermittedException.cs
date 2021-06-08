@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hasse.Core.GameAggregate.Exceptions
+namespace Shared.BiddingCardGame
 {
 	public class BidUnderPermittedException : Exception
 	{

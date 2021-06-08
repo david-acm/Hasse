@@ -8,30 +8,30 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		[Fact]
 		public void DealShouldGive6CardsToEachPlayer()
 		{
-			_hasseGame.Deal();
-			_hasseGame.Deal();
+			Game.Deal();
+			Game.Deal();
 
 			Assert.All(
-				_hasseGame.Players,
+				Game.Players,
 				p => Assert.Equal(6, p.Hand.Count));
 		}
 		
 		[Fact]
 		public void DeckShouldBeEmptyAfterDeal()
 		{
-			_hasseGame.Deal();
+			Game.Deal();
 
-			Assert.Empty(_hasseGame.Deck.Cards);
+			Assert.Empty(Game.Deck.Cards);
 		}
 	}
 
 	public class BaseGameTest
 	{
-		protected readonly HasseGame _hasseGame;
+		protected readonly Game Game;
 
 		protected BaseGameTest()
 		{
-			_hasseGame = new HappyPathGameBuilder();
+			Game = new HappyPathGameBuilder();
 		}
 	}
 }

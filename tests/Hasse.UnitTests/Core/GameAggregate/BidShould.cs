@@ -1,6 +1,9 @@
 ﻿using System.Linq;
 using Hasse.Core.GameAggregate;
-using Hasse.Core.GameAggregate.Exceptions;
+using Shared.BiddingCardGame;
+using Shared.CardGame;
+using Shared.CardGame.Exceptions;
+using Shared.TwoTeamsCardGame;
 using Xunit;
 
 namespace Hasse.UnitTests.Core.GameAggregate
@@ -11,44 +14,44 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		public void ThrowExceptionIfBidIsUnderPermittedValue()
 		{
 			// Prepare
-			_hasseGame.CurrentHand.Bid(new Bid(_hasseGame.Players.First(), Bid.Values.Four));
+			Game.CurrentHand.Bid(new Bid(Game.Players.First(), Bid.Values.Four));
 
 			// Action
 
 
 			// Assert
-			Assert.Throws<BidUnderPermittedException>(() => _hasseGame.CurrentHand.Bid(new Bid(_hasseGame.Players.First(), Bid.Values.One)));
+			Assert.Throws<BidUnderPermittedException>(() => Game.CurrentHand.Bid(new Bid(Game.Players.First(), Bid.Values.One)));
 		}
 
 		[Fact]
 		public void ThrowExceptionIfPlayerAlreadyBid()
 		{
 			// Prepare
-			_hasseGame.Bid(new Bid(_hasseGame.Players.First(), Bid.Values.Four));
+			Game.Bid(new Bid(Game.Players.First(), Bid.Values.Four));
 
 			// Action
 
 
 			// Assert
-			Assert.Throws<NotYourTurnException>(() => _hasseGame.Bid(new Bid(_hasseGame.Players.First(), Bid.Values.Five)));
+			Assert.Throws<NotYourTurnException>(() => Game.Bid(new Bid(Game.Players.First(), Bid.Values.Five)));
 		}
 
 		[Fact]
 		public void RecordBidIfValid()
 		{
 			// Prepare
-			var playerAtTwo = new Bid(_hasseGame.Players.First(p => p.Position == DiagonalTeamPlayer.TablePosition.Two), Bid.Values.Four);
-			_hasseGame.Bid(playerAtTwo);
+			var playerAtTwo = new Bid(Game.Players.First(p => p.Position == DiagonalTeamPlayer.TablePosition.Two), Bid.Values.Four);
+			Game.Bid(playerAtTwo);
 
 			// Action
 
 
 			// Assert
-			var five = new Bid(_hasseGame.Players.Single(p => p.Position == DiagonalTeamPlayer.TablePosition.Three), Bid.Values.Five);
-			_hasseGame.Bid(five);
+			var five = new Bid(Game.Players.Single(p => p.Position == DiagonalTeamPlayer.TablePosition.Three), Bid.Values.Five);
+			Game.Bid(five);
 
 			Assert.Collection(
-				_hasseGame.CurrentHand.Bids,
+				Game.CurrentHand.Bids,
 				b => Assert.Equal(b, playerAtTwo),
 				b => Assert.Equal(b, five));
 		}

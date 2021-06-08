@@ -6,9 +6,9 @@ namespace Hasse.Core.GameAggregate
 	public class PennDeckFactory<T> : DeckFactory
 		where T : CardGame
 	{
-		protected override Deck CreateDeck()
+		protected override Shared.CardGame.DeckAggregate.Deck CreateDeck()
 		{
-			return GameType.FromName(typeof(T).Name).Deck;
+			return Variation.FromName(typeof(T).Name).Deck;
 		}
 	}
 }

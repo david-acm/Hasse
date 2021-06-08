@@ -1,8 +1,7 @@
-﻿using Hasse.Core.GameAggregate.Team;
-using Hasse.SharedKernel;
+﻿using Hasse.SharedKernel;
 using Shared.CardGame.Player;
 
-namespace Hasse.Core.GameAggregate
+namespace Shared.TwoTeamsCardGame
 {
 	public class DiagonalTeamPlayer : Player
 	{
@@ -14,11 +13,11 @@ namespace Hasse.Core.GameAggregate
 			Four
 		}
 
-		protected internal DiagonalTeamPlayer(string name) : base(name)
+		public DiagonalTeamPlayer(string name) : base(name)
 		{
 		}
 
-		public TablePosition Position { get; internal set; }
+		public TablePosition Position { get; set; }
 
 
 		public override IPrototype DeepCopy()
