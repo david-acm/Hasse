@@ -10,10 +10,10 @@ namespace Hasse.UnitTests.Core.GameAggregate
 {
 	public sealed class HappyPathGameBuilder : LazyBuilder<Game, HappyPathGameBuilder>
 	{
-		public const string Player1Name = "David";
-		public const string Player2Name = "Allison";
-		public const string Player3Name = "Greta";
-		public const string Player4Name = "Joe";
+		public const string David = "David";
+		public const string Allison = "Allison";
+		public const string Greta = "Greta";
+		public const string Joe = "Joe";
 
 		protected override Game Construct()
 		{
@@ -25,17 +25,17 @@ namespace Hasse.UnitTests.Core.GameAggregate
 					team => team
 						.WithPlayer(p => p
 							.WithPosition(One)
-							.WithName(Player1Name))
+							.WithName(David))
 						.WithPlayer(p => p
-							.WithName(Player2Name)
+							.WithName(Allison)
 							.WithPosition(Two)))
 				.WithTeam("America",
 					team => team
 						.WithPlayer(p => p
-							.WithName(Player3Name)
+							.WithName(Greta)
 							.WithPosition(Three))
 						.WithPlayer(p => p
-							.WithName(Player4Name)
+							.WithName(Joe)
 							.WithPosition(Four)))
 				.WithDealer(Two);
 

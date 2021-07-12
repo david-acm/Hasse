@@ -96,10 +96,10 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		}
 
 		[Theory]
-		[InlineData(HappyPathGameBuilder.Player1Name)]
-		[InlineData(HappyPathGameBuilder.Player2Name)]
-		[InlineData(HappyPathGameBuilder.Player3Name)]
-		[InlineData(HappyPathGameBuilder.Player4Name)]
+		[InlineData(HappyPathGameBuilder.David)]
+		[InlineData(HappyPathGameBuilder.Allison)]
+		[InlineData(HappyPathGameBuilder.Greta)]
+		[InlineData(HappyPathGameBuilder.Joe)]
 		public void HaveAssignedNames(string name)
 		{
 			_game.Teams.ToList().ForEach(t => Assert.NotNull(t.Name));
@@ -121,15 +121,20 @@ namespace Hasse.UnitTests.Core.GameAggregate
 		}
 
 		[Fact]
-		public void ShouldHaveCurrentHandWithOrderedTurnsQueue()
+		public void HaveCurrentHandWithOrderedTurnsQueue()
 		{
 			// Arrange
-			// Act
+			var turnsCount = _game.CurrentHand.Turns.Count;
+			var playerToTheLeftOfDealer = _game.Players.ElementAt(1);
+			var playerWithFirstTurn = _game.CurrentHand.Turns.First().Player;
+			var dealer = _game.Players.First(
+				p => p.Position == DiagonalTeamPlayer.TablePosition.One);
+			var playerWithTurnFour = _game.CurrentHand.Turns.ElementAt(3).Player;
+
 			// Assert
-			Assert.Equal(4, _game.CurrentHand.Turns.Count);
-			Assert.Equal(_game.Players.ElementAt(1), _game.CurrentHand.Turns.First().Player);
-			var playerAtOne = _game.Players.First(p => p.Position == DiagonalTeamPlayer.TablePosition.One);
-			Assert.Equal(playerAtOne, _game.CurrentHand.Turns.ElementAt(3).Player);
+			Assert.Equal(4, turnsCount);
+			Assert.Equal(playerToTheLeftOfDealer, playerWithFirstTurn);
+			Assert.Equal(dealer, playerWithTurnFour);
 		}
 	}
 }
