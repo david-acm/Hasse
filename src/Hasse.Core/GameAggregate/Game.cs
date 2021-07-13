@@ -37,6 +37,8 @@ namespace Hasse.Core.GameAggregate
 		/// </summary>
 		public Hand CurrentHand { get; }
 
+		public Stage Stage { get; private set; }
+
 		/// <summary>
 		/// Gets all the players of the game.
 		/// </summary>
@@ -53,7 +55,15 @@ namespace Hasse.Core.GameAggregate
 		public Game Bid(Bid bid)
 		{
 			CurrentHand.Bid(bid);
+				
 			return this;
 		}
+	}
+
+	public enum Stage
+	{
+	  Dealing,
+	  Bidding,
+	  SelectingTrump
 	}
 }

@@ -16,6 +16,7 @@ namespace Shared.BiddingCardGame
 
 		public enum Values
 		{
+			Pass,
 			One,
 			Two,
 			Three,

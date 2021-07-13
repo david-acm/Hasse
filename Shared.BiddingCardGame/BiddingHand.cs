@@ -9,6 +9,8 @@ namespace Shared.BiddingCardGame
 {
 	public abstract class BiddingHand : Hand
 	{
+		public bool BiddingFinished => _bids.Count == Turns.Count;
+
 		protected readonly List<Bid> _bids = new();
 
 		protected BiddingHand(CardGame.CardGame game, IPlayer dealer) : base(game, dealer)
@@ -17,15 +19,31 @@ namespace Shared.BiddingCardGame
 
 		public IReadOnlyList<Bid> Bids => _bids.ToList().AsReadOnly();
 
+		public IPlayer CurrentPlayer => _turns.Peek().Player;
+
 		public void Bid(Bid bid)
 		{
 			// TODO: Change to guard clause
-			ValidateBid(bid);
+			if(bid.Value != default)
+				ValidateBid(bid);
 
 			_bids.Add(bid);
-
 			RotateQueue();
+
+			if (!BiddingFinished)
+			{
+				return;
+			}
+
+			Winner = _bids.OrderByDescending(b => b.Value).First().Player;
+
+			do
+			{
+				RotateQueue();
+			} while (CurrentPlayer != Winner);
 		}
+
+		private IPlayer Winner { get; set; }
 
 		private void ValidateBid(Bid bid)
 		{
